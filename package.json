@@ -7,7 +7,7 @@
     "serve": "npx http-server . -c-1 -p 4173",
     "desktop": "electron .",
     "dist:win": "electron-builder --win portable zip",
-    "check": "node --check game.js && node tests/static-smoke.mjs"
+    "check": "node --check game.js && node tests/static-smoke.mjs && node tests/node-runtime-smoke.mjs"
   },
   "devDependencies": {
     "electron": "^38.1.0",
@@ -17,9 +17,20 @@
   "build": {
     "appId": "com.ghostysudo.knellward",
     "productName": "KNELLWARD",
-    "files": ["index.html", "styles.css", "game.js", "electron/**/*"],
+    "files": [
+      "index.html",
+      "styles.css",
+      "game.js",
+      "payload/game-gz-*.js",
+      "electron/**/*"
+    ],
     "asar": true,
-    "win": {"target": ["portable", "zip"]},
+    "win": {
+      "target": [
+        "portable",
+        "zip"
+      ]
+    },
     "artifactName": "KNELLWARD-${version}-${arch}.${ext}"
   }
 }
