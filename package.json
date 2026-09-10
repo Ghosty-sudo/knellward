@@ -1,0 +1,25 @@
+{
+  "name": "knellward",
+  "version": "0.1.0",
+  "description": "KNELLWARD - a compact dark-fantasy pixel RPG",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "serve": "npx http-server . -c-1 -p 4173",
+    "desktop": "electron .",
+    "dist:win": "electron-builder --win portable zip",
+    "check": "node --check game.js && node tests/static-smoke.mjs"
+  },
+  "devDependencies": {
+    "electron": "^38.1.0",
+    "electron-builder": "^26.0.12",
+    "http-server": "^14.1.1"
+  },
+  "build": {
+    "appId": "com.ghostysudo.knellward",
+    "productName": "KNELLWARD",
+    "files": ["index.html", "styles.css", "game.js", "electron/**/*"],
+    "asar": true,
+    "win": {"target": ["portable", "zip"]},
+    "artifactName": "KNELLWARD-${version}-${arch}.${ext}"
+  }
+}
