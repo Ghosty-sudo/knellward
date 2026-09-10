@@ -8,3 +8,31 @@ kbd{background:#101218;border:1px solid #4f4b43;border-bottom-width:2px;padding:
 .setting{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:center;text-align:left;margin:10px 0}.setting input[type=range]{width:100%}.setting select{width:100%;background:#11131a;color:var(--text);border:1px solid #51482f;padding:8px}.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.choice{min-height:145px;text-align:left}.choice .rarity{font-size:11px;text-transform:uppercase;color:#8ec4bd}.choice h3{color:var(--gold);margin:7px 0}.choice p{font-size:13px;color:#c5bba4;line-height:1.45}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}.summary>div{border:1px solid #3e392e;background:#101118;padding:10px}.summary b{display:block;color:var(--gold);font-size:20px}
 [data-contrast="high"]{--gold:#ffe58b;--text:#fff;--muted:#d6d6d6}.app[data-contrast="high"] canvas{filter:contrast(1.18) brightness(1.08)}.app[data-motion="reduced"] *{transition:none!important}
 @media(max-width:780px){.hud{grid-template-columns:1fr 1fr}.hud-left{display:none}.ability-bar{width:96vw;overflow:auto;justify-content:flex-start}.ability-bar button span small{display:none}.grid2,.choice-grid{grid-template-columns:1fr}.panel{padding:16px}.summary{grid-template-columns:1fr 1fr}}
+
+.mobile-controls,.mobile-hint{display:none}
+@media (max-width:900px),(pointer:coarse){
+  html,body{overscroll-behavior:none;touch-action:none}
+  .ability-bar{display:none!important}
+  .mobile-controls{position:absolute;z-index:6;left:0;right:0;bottom:max(8px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:0 max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left));pointer-events:none;user-select:none;-webkit-user-select:none}
+  .mobile-controls button{pointer-events:auto;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  .mobile-dpad{width:144px;height:144px;display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(3,48px);filter:drop-shadow(0 5px 12px #000)}
+  .mobile-btn{min-width:46px;min-height:46px;padding:5px;border:1px solid #8a7447;background:rgba(12,14,20,.86);color:#fff5d1;font-weight:bold;border-radius:7px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+  .mobile-btn:active{background:#40331f;transform:scale(.96)}
+  .dpad-up{grid-column:2;grid-row:1}.dpad-left{grid-column:1;grid-row:2}.dpad-wait{grid-column:2;grid-row:2;font-size:9px;color:#d8cba8}.dpad-down{grid-column:2;grid-row:3}.dpad-right{grid-column:3;grid-row:2}
+  .mobile-actions{width:min(300px,45vw);display:grid;grid-template-columns:repeat(3,minmax(50px,1fr));gap:6px;align-items:stretch}
+  .mobile-actions .action{min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px}
+  .mobile-actions small{font-size:8px;color:#bdb39e}.mobile-actions .pause{grid-column:3;grid-row:2}.mobile-actions .tonic{grid-column:2;grid-row:2}
+  .mobile-hint{display:block;position:absolute;z-index:5;left:50%;top:max(4px,env(safe-area-inset-top));transform:translateX(-50%);font-size:8px;letter-spacing:.06em;color:#8e8777;pointer-events:none;white-space:nowrap}
+  .hud{top:max(18px,env(safe-area-inset-top));width:96vw;font-size:11px}.hud>div{padding:5px 7px}.meter{grid-template-columns:40px 1fr 58px}
+  .dialog{bottom:158px;max-height:43vh;overflow:auto}
+  .version{display:none}
+}
+@media (orientation:portrait) and (max-width:900px){
+  .mobile-dpad{width:126px;height:126px;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px)}
+  .mobile-btn{min-width:40px;min-height:40px;padding:3px}.mobile-actions{width:46vw;gap:4px}.mobile-actions .action{min-height:43px;font-size:9px}
+  .hud-right{display:none}.hud{grid-template-columns:1fr}.hud-center{max-width:94vw}
+}
+@media (max-height:460px) and (pointer:coarse){
+  .mobile-dpad{width:126px;height:126px;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px)}
+  .mobile-btn{min-width:40px;min-height:40px}.mobile-actions .action{min-height:43px}.dialog{bottom:140px}
+}

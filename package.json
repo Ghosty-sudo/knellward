@@ -1,13 +1,13 @@
 {
   "name": "knellward",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "KNELLWARD - a compact dark-fantasy pixel RPG",
   "main": "electron/main.cjs",
   "scripts": {
     "serve": "npx http-server . -c-1 -p 4173",
     "desktop": "electron .",
     "dist:win": "electron-builder --win portable zip",
-    "check": "node --check game.js && node tests/static-smoke.mjs && node tests/node-runtime-smoke.mjs"
+    "check": "node --check game.js && node --check runtime-patches.js && node --check mobile-controls.js && node tests/static-smoke.mjs && node tests/node-runtime-smoke.mjs"
   },
   "devDependencies": {
     "electron": "^38.1.0",
@@ -21,15 +21,14 @@
       "index.html",
       "styles.css",
       "game.js",
-      "payload/game-gz-*.js",
+      "runtime-patches.js",
+      "mobile-controls.js",
+      "payload/v012/**/*",
       "electron/**/*"
     ],
     "asar": true,
     "win": {
-      "target": [
-        "portable",
-        "zip"
-      ]
+      "target": ["portable", "zip"]
     },
     "artifactName": "KNELLWARD-${version}-${arch}.${ext}"
   }

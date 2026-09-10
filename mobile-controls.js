@@ -19,6 +19,7 @@
     down: () => direct("move", 0, 1) || fireKey("ArrowDown", "ArrowDown"),
     left: () => direct("move", -1, 0) || fireKey("ArrowLeft", "ArrowLeft"),
     right: () => direct("move", 1, 0) || fireKey("ArrowRight", "ArrowRight"),
+    wait: () => direct("wait") || fireKey(" ", "Space"),
     cleave: () => direct("ability", "cleave") || fireKey("1", "Digit1"),
     ward: () => direct("ability", "ward") || fireKey("2", "Digit2"),
     knell: () => direct("ability", "knell") || fireKey("3", "Digit3"),
@@ -31,23 +32,14 @@
     event?.preventDefault();
     const action = actions[button.dataset.mobileAction];
     if (!action) return;
-    if (navigator.vibrate) navigator.vibrate(12);
+    if (navigator.vibrate) navigator.vibrate(10);
     action();
   };
 
   controls.querySelectorAll("button[data-mobile-action]").forEach((button) => {
-    button.addEventListener("touchstart", (event) => {
-      lastTouch = Date.now();
-      activate(button, event);
-    }, { passive: false });
-    button.addEventListener("pointerdown", (event) => {
-      if (Date.now() - lastTouch < 700) return;
-      activate(button, event);
-    });
-    button.addEventListener("click", (event) => {
-      if (Date.now() - lastTouch < 700) { event.preventDefault(); return; }
-      activate(button, event);
-    });
+    button.addEventListener("touchstart", (event) => { lastTouch = Date.now(); activate(button, event); }, { passive: false });
+    button.addEventListener("pointerdown", (event) => { if (Date.now() - lastTouch < 700) return; activate(button, event); });
+    button.addEventListener("click", (event) => { if (Date.now() - lastTouch < 700) { event.preventDefault(); return; } activate(button, event); });
     button.addEventListener("contextmenu", (event) => event.preventDefault());
   });
 

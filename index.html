@@ -6,31 +6,6 @@
 <meta name="theme-color" content="#0b0d12" />
 <title>KNELLWARD</title>
 <link rel="stylesheet" href="styles.css" />
-<style>
-.mobile-controls,.mobile-hint{display:none}
-@media (max-width:900px),(pointer:coarse){
-  html,body{overscroll-behavior:none;touch-action:none}
-  .ability-bar{display:none!important}
-  .mobile-controls{position:absolute;z-index:6;left:0;right:0;bottom:max(10px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:0 max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left));pointer-events:none;user-select:none;-webkit-user-select:none}
-  .mobile-controls button{pointer-events:auto;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-  .mobile-dpad{width:156px;height:156px;display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(3,52px);filter:drop-shadow(0 5px 12px #000)}
-  .mobile-btn{min-width:48px;min-height:48px;padding:6px;border:1px solid #8a7447;background:rgba(12,14,20,.88);color:#fff5d1;font-weight:bold;border-radius:7px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
-  .mobile-btn:active{background:#40331f;transform:scale(.96)}
-  .dpad-up{grid-column:2;grid-row:1}.dpad-left{grid-column:1;grid-row:2}.dpad-down{grid-column:2;grid-row:3}.dpad-right{grid-column:3;grid-row:2}
-  .mobile-actions{width:min(310px,46vw);display:grid;grid-template-columns:repeat(3,minmax(52px,1fr));gap:7px;align-items:stretch}
-  .mobile-actions .action{min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px}
-  .mobile-actions small{font-size:9px;color:#bdb39e}.mobile-actions .pause{grid-column:3;grid-row:2}.mobile-actions .tonic{grid-column:2;grid-row:2}
-  .mobile-hint{display:block;position:absolute;z-index:5;left:50%;top:max(5px,env(safe-area-inset-top));transform:translateX(-50%);font-size:9px;letter-spacing:.08em;color:#8e8777;pointer-events:none;white-space:nowrap}
-  .hud{top:max(20px,env(safe-area-inset-top));width:96vw;font-size:11px}.hud>div{padding:5px 7px}.meter{grid-template-columns:40px 1fr 58px}
-  .dialog{bottom:175px;max-height:45vh;overflow:auto}
-  .version{display:none}
-}
-@media (orientation:portrait) and (max-width:900px){
-  .mobile-dpad{width:132px;height:132px;grid-template-columns:repeat(3,44px);grid-template-rows:repeat(3,44px)}
-  .mobile-btn{min-width:42px;min-height:42px;padding:4px}.mobile-actions{width:46vw;gap:5px}.mobile-actions .action{min-height:46px;font-size:10px}
-  .hud-right{display:none}.hud{grid-template-columns:1fr}.hud-center{max-width:94vw}
-}
-</style>
 </head>
 <body>
 <div id="app" class="app" data-contrast="normal" data-motion="full">
@@ -58,58 +33,33 @@
     <button data-ability="ward"><kbd>2</kbd><span><b>Ward</b><small>1 Focus · gain barrier</small></span></button>
     <button data-ability="knell"><kbd>3</kbd><span><b>Knell</b><small>2 Focus · 4-tile blast</small></span></button>
     <button id="potionBtn"><kbd>Q</kbd><span><b>Tonic</b><small>Heal 12 HP</small></span></button>
+    <button id="waitBtn"><kbd>Space</kbd><span><b>Wait</b><small>Hold position · advance turn</small></span></button>
   </div>
 
   <div id="mobileControls" class="mobile-controls" aria-label="Mobile playtest controls">
     <div class="mobile-dpad" aria-label="Movement controls">
       <button class="mobile-btn dpad-up" data-mobile-action="up" aria-label="Move up">▲</button>
       <button class="mobile-btn dpad-left" data-mobile-action="left" aria-label="Move left">◀</button>
+      <button class="mobile-btn dpad-wait" data-mobile-action="wait" aria-label="Wait one turn">WAIT</button>
       <button class="mobile-btn dpad-down" data-mobile-action="down" aria-label="Move down">▼</button>
       <button class="mobile-btn dpad-right" data-mobile-action="right" aria-label="Move right">▶</button>
     </div>
     <div class="mobile-actions" aria-label="Combat controls">
-      <button class="mobile-btn action cleave" data-mobile-action="cleave"><b>Cleave</b><small>1</small></button>
-      <button class="mobile-btn action ward" data-mobile-action="ward"><b>Ward</b><small>2</small></button>
-      <button class="mobile-btn action knell" data-mobile-action="knell"><b>Knell</b><small>3</small></button>
-      <button class="mobile-btn action tonic" data-mobile-action="tonic"><b>Tonic</b><small>Q</small></button>
+      <button class="mobile-btn action cleave" data-mobile-action="cleave"><b>Cleave</b><small>1 Focus</small></button>
+      <button class="mobile-btn action ward" data-mobile-action="ward"><b>Ward</b><small>1 Focus</small></button>
+      <button class="mobile-btn action knell" data-mobile-action="knell"><b>Knell</b><small>2 Focus</small></button>
+      <button class="mobile-btn action tonic" data-mobile-action="tonic"><b>Tonic</b><small>Heal</small></button>
       <button class="mobile-btn pause" data-mobile-action="pause" aria-label="Pause">Ⅱ</button>
     </div>
   </div>
 
-  <div class="mobile-hint">Mobile playtest · landscape recommended</div>
+  <div class="mobile-hint">Mobile playtest · landscape recommended · center pad waits</div>
   <div id="toast" class="toast hidden"></div>
   <div id="dialog" class="dialog hidden"></div>
   <div id="menu" class="menu"></div>
-  <div id="version" class="version">v0.1.1 mobile playtest</div>
+  <div id="version" class="version">v0.1.4 combat tempo</div>
 </div>
-<script src="payload/game-gz-01.js"></script>
-<script src="payload/game-gz-02.js"></script>
-<script src="payload/game-gz-03.js"></script>
-<script src="payload/game-gz-04-01.js"></script>
-<script src="payload/game-gz-04-02.js"></script>
-<script src="payload/game-gz-04-03.js"></script>
-<script src="payload/game-gz-04-04-01.js"></script>
-<script src="payload/game-gz-04-04-02.js"></script>
-<script src="payload/game-gz-04-04-03.js"></script>
-<script src="payload/game-gz-04-04-04.js"></script>
-<script src="payload/game-gz-04-04-05.js"></script>
-<script src="payload/game-gz-04-04-06.js"></script>
-<script src="payload/game-gz-04-04-07.js"></script>
-<script src="payload/game-gz-04-04-08.js"></script>
-<script src="payload/game-gz-04-04-09.js"></script>
-<script src="payload/game-gz-04-04-10.js"></script>
-<script src="payload/game-gz-04-04-11.js"></script>
-<script src="payload/game-gz-04-04-12.js"></script>
-<script src="payload/game-gz-04-04-13.js"></script>
-<script src="payload/game-gz-04-04-14.js"></script>
-<script src="payload/game-gz-04-04-15.js"></script>
-<script src="payload/game-gz-04-04-16.js"></script>
-<script src="payload/game-gz-04-04-17.js"></script>
-<script src="payload/game-gz-04-04-18.js"></script>
-<script src="payload/game-gz-04-04-19.js"></script>
-<script src="payload/game-gz-04-04-20.js"></script>
-<script src="payload/game-gz-04-05.js"></script>
-<script src="payload/game-gz-04-06.js"></script>
+<script src="runtime-patches.js"></script>
 <script src="game.js"></script>
 <script src="mobile-controls.js"></script>
 </body>
