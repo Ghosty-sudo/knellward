@@ -1,40 +1,34 @@
 (() => {
   "use strict";
-
   const controls = document.getElementById("mobileControls");
   if (!controls) return;
 
-  const fireKey = (key, code) => {
-    window.dispatchEvent(new KeyboardEvent("keydown", {
-      key,
-      code: code || key,
-      bubbles: true,
-      cancelable: true
-    }));
+  const direct = (name, ...args) => {
+    const api = window.KNELLWARD_INPUT;
+    if (!api || typeof api[name] !== "function") return false;
+    api[name](...args);
+    return true;
   };
 
-  const pressExisting = (selector, fallbackKey, fallbackCode) => {
-    const target = document.querySelector(selector);
-    if (target && typeof target.click === "function") {
-      target.click();
-      return;
-    }
-    fireKey(fallbackKey, fallbackCode);
+  const fireKey = (key, code) => {
+    window.dispatchEvent(new KeyboardEvent("keydown", { key, code: code || key, bubbles: true, cancelable: true }));
   };
 
   const actions = {
-    up: () => fireKey("ArrowUp", "ArrowUp"),
-    down: () => fireKey("ArrowDown", "ArrowDown"),
-    left: () => fireKey("ArrowLeft", "ArrowLeft"),
-    right: () => fireKey("ArrowRight", "ArrowRight"),
-    cleave: () => pressExisting('[data-ability="cleave"]', "1", "Digit1"),
-    ward: () => pressExisting('[data-ability="ward"]', "2", "Digit2"),
-    knell: () => pressExisting('[data-ability="knell"]', "3", "Digit3"),
-    tonic: () => pressExisting("#potionBtn", "q", "KeyQ"),
-    pause: () => fireKey("Escape", "Escape")
+    up: () => direct("move", 0, -1) || fireKey("ArrowUp", "ArrowUp"),
+    down: () => direct("move", 0, 1) || fireKey("ArrowDown", "ArrowDown"),
+    left: () => direct("move", -1, 0) || fireKey("ArrowLeft", "ArrowLeft"),
+    right: () => direct("move", 1, 0) || fireKey("ArrowRight", "ArrowRight"),
+    cleave: () => direct("ability", "cleave") || fireKey("1", "Digit1"),
+    ward: () => direct("ability", "ward") || fireKey("2", "Digit2"),
+    knell: () => direct("ability", "knell") || fireKey("3", "Digit3"),
+    tonic: () => direct("tonic") || fireKey("q", "KeyQ"),
+    pause: () => direct("pause") || fireKey("Escape", "Escape")
   };
 
-  const activate = (button) => {
+  let lastTouch = 0;
+  const activate = (button, event) => {
+    event?.preventDefault();
     const action = actions[button.dataset.mobileAction];
     if (!action) return;
     if (navigator.vibrate) navigator.vibrate(12);
@@ -42,9 +36,17 @@
   };
 
   controls.querySelectorAll("button[data-mobile-action]").forEach((button) => {
+    button.addEventListener("touchstart", (event) => {
+      lastTouch = Date.now();
+      activate(button, event);
+    }, { passive: false });
     button.addEventListener("pointerdown", (event) => {
-      event.preventDefault();
-      activate(button);
+      if (Date.now() - lastTouch < 700) return;
+      activate(button, event);
+    });
+    button.addEventListener("click", (event) => {
+      if (Date.now() - lastTouch < 700) { event.preventDefault(); return; }
+      activate(button, event);
     });
     button.addEventListener("contextmenu", (event) => event.preventDefault());
   });
