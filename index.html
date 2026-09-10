@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0d12" />
+<title>KNELLWARD</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="app" class="app" data-contrast="normal" data-motion="full">
+  <canvas id="game" width="960" height="540" aria-label="KNELLWARD game field"></canvas>
+  <div id="hud" class="hud hidden" aria-live="polite">
+    <div class="hud-left">
+      <div class="brand-small">KNELLWARD</div>
+      <div id="floorLabel">Depth I</div>
+      <div id="objectiveLabel" class="muted">Find the stairwell.</div>
+    </div>
+    <div class="hud-center">
+      <div class="meter"><span>HP</span><div class="bar"><i id="hpBar"></i></div><b id="hpText"></b></div>
+      <div class="meter"><span>FOCUS</span><div class="bar focus"><i id="focusBar"></i></div><b id="focusText"></b></div>
+      <div class="stats" id="statsText"></div>
+    </div>
+    <div class="hud-right">
+      <div id="relicText">Relics: 0</div>
+      <div id="potionText">Tonics: 0</div>
+      <div id="turnText">Turn 0</div>
+    </div>
+  </div>
+
+  <div id="abilityBar" class="ability-bar hidden">
+    <button data-ability="cleave"><kbd>1</kbd><span><b>Cleave</b><small>1 Focus · adjacent sweep</small></span></button>
+    <button data-ability="ward"><kbd>2</kbd><span><b>Ward</b><small>1 Focus · gain barrier</small></span></button>
+    <button data-ability="knell"><kbd>3</kbd><span><b>Knell</b><small>2 Focus · 4-tile blast</small></span></button>
+    <button id="potionBtn"><kbd>Q</kbd><span><b>Tonic</b><small>Heal 12 HP</small></span></button>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <div id="dialog" class="dialog hidden"></div>
+  <div id="menu" class="menu"></div>
+  <div id="version" class="version">v0.1.0 sprint build</div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
