@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
 <meta name="theme-color" content="#0b0d12" />
 <title>KNELLWARD</title>
 <link rel="stylesheet" href="styles.css" />
@@ -35,10 +35,27 @@
     <button id="potionBtn"><kbd>Q</kbd><span><b>Tonic</b><small>Heal 12 HP</small></span></button>
   </div>
 
+  <div id="mobileControls" class="mobile-controls" aria-label="Mobile playtest controls">
+    <div class="mobile-dpad" aria-label="Movement controls">
+      <button class="mobile-btn dpad-up" data-mobile-action="up" aria-label="Move up">▲</button>
+      <button class="mobile-btn dpad-left" data-mobile-action="left" aria-label="Move left">◀</button>
+      <button class="mobile-btn dpad-down" data-mobile-action="down" aria-label="Move down">▼</button>
+      <button class="mobile-btn dpad-right" data-mobile-action="right" aria-label="Move right">▶</button>
+    </div>
+    <div class="mobile-actions" aria-label="Combat controls">
+      <button class="mobile-btn action cleave" data-mobile-action="cleave"><b>Cleave</b><small>1</small></button>
+      <button class="mobile-btn action ward" data-mobile-action="ward"><b>Ward</b><small>2</small></button>
+      <button class="mobile-btn action knell" data-mobile-action="knell"><b>Knell</b><small>3</small></button>
+      <button class="mobile-btn action tonic" data-mobile-action="tonic"><b>Tonic</b><small>Q</small></button>
+      <button class="mobile-btn pause" data-mobile-action="pause" aria-label="Pause">Ⅱ</button>
+    </div>
+  </div>
+
+  <div class="mobile-hint">Mobile playtest · landscape recommended</div>
   <div id="toast" class="toast hidden"></div>
   <div id="dialog" class="dialog hidden"></div>
   <div id="menu" class="menu"></div>
-  <div id="version" class="version">v0.1.0 sprint build</div>
+  <div id="version" class="version">v0.1.1 mobile playtest</div>
 </div>
 <script src="payload/game-gz-01.js"></script>
 <script src="payload/game-gz-02.js"></script>
@@ -69,5 +86,6 @@
 <script src="payload/game-gz-04-05.js"></script>
 <script src="payload/game-gz-04-06.js"></script>
 <script src="game.js"></script>
+<script src="mobile-controls.js"></script>
 </body>
 </html>
